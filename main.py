@@ -12,17 +12,17 @@ mpl.rcParams['figure.figsize'] = (12, 12)
 mpl.rcParams['axes.grid'] = False
 
 content_path = 'style17.jpeg'
-style_path = 'style20.jpg'
+style_path = 'style21.jpg'
 
 content_image = func.load_img(content_path)
 style_image = func.load_img(style_path)
 
-content_layers = ['block4_conv2']
-style_layers = ['block2_conv1',
-                'block2_conv2',
-                'block3_conv1',
-                'block4_conv1',
-                'block5_conv1',]
+content_layers = ['block5_conv1']
+style_layers = ['block1_conv1',
+                'block2_conv1',
+                'block3_conv1', 
+                'block4_conv1', 
+                'block5_conv1']
 
 num_content_layers = len(content_layers)
 num_style_layers = len(style_layers)
@@ -47,7 +47,7 @@ def style_content_loss(outputs):
     return loss
 
 opt = tf.optimizers.Adam(learning_rate=0.02, beta_1=0.99, epsilon=1e-1)
-image = tf.Variable(content_image + tf.random.truncated_normal(content_image.shape, mean=0.0, stddev=0.08))
+image = tf.Variable(content_image + tf.random.truncated_normal(content_image.shape, mean=0.0, stddev=0.08), trainable=True)
 
 @tf.function()
 def train_step(image):
